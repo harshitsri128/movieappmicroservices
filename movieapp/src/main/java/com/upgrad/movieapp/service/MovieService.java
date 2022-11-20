@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.upgrad.movieapp.entity.Theatre;
+import com.upgrad.movieapp.entity.User;
 import com.upgrad.movieapp.entity.Movie;
 
 public interface MovieService {
@@ -23,5 +25,6 @@ public interface MovieService {
 	
 	public Page<Movie> getMovieDetailsPaginated(Pageable pageable);
 	
+	public Boolean bookMovie(User user, Movie movie, Theatre theatre);
 
 }
