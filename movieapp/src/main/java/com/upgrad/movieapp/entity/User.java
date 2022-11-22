@@ -1,17 +1,8 @@
-package com.upgrad.user.entities;
+package com.upgrad.movieapp.entity;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class User {
@@ -26,18 +17,18 @@ public class User {
   @Column(length = 20)
   private String lastName;
 
-  @Column(name="user_name", length = 20, nullable = false, unique = true)
+  @Column(length = 20, nullable = false, unique = true)
   private String username;
 
-  @Column(length = 20)
+  @Column(length = 20, nullable = false)
   private String password;
 
-  @Column(nullable = true)
+  @Column(nullable = false)
   private LocalDateTime dateOfBirth;
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "customer_contact_number", joinColumns = @JoinColumn(name = "customer_id"))
-  @Column(name = "mobile_number")
+  @Column(name = "mobile_number", nullable = false)
   private Set<Integer> phoneNumbers;
 
   public int getUserId() {

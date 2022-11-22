@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.upgrad.movieapp.dto.MovieBookingDTO;
 import com.upgrad.movieapp.dto.MovieDTO;
+import com.upgrad.movieapp.entity.Theatre;
+import com.upgrad.movieapp.entity.User;
 import com.upgrad.movieapp.entity.Movie;
 import com.upgrad.movieapp.service.MovieService;
 
@@ -73,4 +76,17 @@ public class MovieController {
 		return new ResponseEntity(responseMovieDto,HttpStatus.OK);
 		
 	}
+	
+	@PostMapping(value = "/bookings/movie" ,consumes = MediaType.APPLICATION_JSON_VALUE)
+	  public ResponseEntity bookMovieDetails(@RequestBody MovieBookingDTO movieBookingDTO){
+	    Movie requestedMovie = modelMapper.map(movieBookingDTO.getMovie(),Movie.class);
+	    User fromUser = modelMapper.map(movieBookingDTO.getUser(),User.class);
+	    Theatre requestedTheatre = modelMapper.map(movieBookingDTO.getTheatre(), Theatre.class);
+
+	    boolean isValidBooking = movieService.bookMovie(fromUser,requestedMovie,requestedTheatre);
+
+	    if(!isValidBooking)
+	      return new ResponseEntity("Not Booked !!", HttpStatus.OK) ;
+	    return new ResponseEntity("Booked Successfully !!", HttpStatus.OK) ;
+	  }
 }
